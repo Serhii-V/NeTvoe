@@ -58,4 +58,8 @@ extension SnakeBody {
     func increaseBody() {
         self.addPart()
     }
+
+    func isSnakeAteMeal(_ meal: CGRect) -> Bool {
+        return bodyArray[0].frame.intersects(meal)
+    }
 }

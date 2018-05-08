@@ -15,14 +15,21 @@ class GameVC: UIViewController {
     @IBOutlet weak var addPart: UIButton!
     @IBOutlet weak var move: UIButton!
 
+    
     var snake: SnakeBody = SnakeBody()
-    var withBorder: Bool = true
+    var withBorder: Bool = false
+    var isGameOver: Bool = false {
+        didSet {
+            self.view.layer.backgroundColor = UIColor.red.cgColor
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGameArea()
         startGame()
         snake.delegate = self
+        moveSnake()
     }
 
 
@@ -38,6 +45,19 @@ class GameVC: UIViewController {
             snake.withBorder = true
         } else {
             snake.withBorder = false
+        }
+    }
+
+    func moveSnake() {
+        snake.move()
+        if snake.isSnakeAteMeal(<#T##meal: CGRect##CGRect#>) {
+            snake.addPart()
+
+        }
+        if !isGameOver {
+            delayWithSeconds(0.5) {
+                self.moveSnake()
+            }
         }
     }
 
@@ -60,8 +80,16 @@ class GameVC: UIViewController {
 
 }
 
+extension GameVC {
+    func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            completion()
+        }
+    }
+}
+
 extension GameVC: SnakeDelegate {
     func gameOver() {
-        self.view.layer.backgroundColor = UIColor.red.cgColor
+        isGameOver = true
     }
 }
