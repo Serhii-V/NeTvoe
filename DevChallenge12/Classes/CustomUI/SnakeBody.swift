@@ -33,10 +33,10 @@ class SnakeBody: UIView {
         guard bodyArray.count != 0 else { return }
         bodyArray[0].changeColor(bodyColor: .black)
         let part = PartOfSnakeView(frame: CGRect(x: returnPositionX(), y: returnPositionY(), width: heightOfSnake, height: heightOfSnake), partColor: UIColor.red)
+        bodyArray.insert(part, at: 0)
         if withBorder {
             guard !isBitBorder(part) else {delegate?.gameOver(); return}
         }
-        bodyArray.insert(part, at: 0)
         drawSnake()
         self.setNeedsDisplay()
     }
@@ -44,10 +44,13 @@ class SnakeBody: UIView {
     func returnPositionX() -> CGFloat {
         let x = bodyArray[0].frame.origin.x + deltaPositionX()
         guard let sWidth = superview?.bounds.size.width else {return x}
-        if x > sWidth - 10 {
-            return 0.0
+        if withBorder {
+            return x
+        }
+        if x > sWidth - 15 {
+            return 5.0
         } else if x < 0 {
-            return sWidth - 10
+            return sWidth - 15
         }
         return x
     }
@@ -55,10 +58,13 @@ class SnakeBody: UIView {
     func returnPositionY() -> CGFloat {
         let y = bodyArray[0].frame.origin.y + deltaPositionY()
         guard let sHeight = superview?.bounds.size.height else {return y}
-        if y > sHeight - 10 {
-            return 0.0
+        if withBorder {
+            return y
+        }
+        if y > sHeight - 15 {
+            return 5.0
         } else if y < 0 {
-            return sHeight - 10
+            return sHeight - 15
         }
         return y
     }
@@ -92,11 +98,11 @@ class SnakeBody: UIView {
     }
 
     func isBitBorder(_ head: PartOfSnakeView) -> Bool {
-        let x = frame.origin.x
-        let y = frame.origin.y
+        let x = head.frame.origin.x
+        let y = head.frame.origin.y
         guard let xMarge = superview?.bounds.size.width else {return false}
         guard let yMarge = superview?.bounds.size.width else {return false}
-        guard x > 5.0, y > 5.0, x < xMarge, y < yMarge else {return true}
+        guard x > 4.0, y > 4.0, x < xMarge - 15, y < yMarge - 15  else {return true}
         return false
     }
 
