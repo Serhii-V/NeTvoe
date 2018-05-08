@@ -12,15 +12,19 @@ class GameVC: UIViewController {
     @IBOutlet weak var gameAreaView: UIView!
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
-    @IBOutlet weak var addPart: UIButton!
-    @IBOutlet weak var move: UIButton!
+    @IBOutlet weak var scoreLabel: UILabel!
 
-    
     var snake: SnakeBody = SnakeBody()
     var withBorder: Bool = false
     var isGameOver: Bool = false {
         didSet {
             self.view.layer.backgroundColor = UIColor.red.cgColor
+        }
+    }
+    var meal: MealView = MealView()
+    var score: Int = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
         }
     }
 
@@ -39,6 +43,8 @@ class GameVC: UIViewController {
     }
 
     func setupGameArea() {
+        meal.setupFrame(superView: gameAreaView)
+        gameAreaView.addSubview(meal)
         if withBorder {
             gameAreaView.layer.borderWidth = 5.0
             gameAreaView.layer.borderColor = UIColor.black.cgColor
@@ -50,9 +56,12 @@ class GameVC: UIViewController {
 
     func moveSnake() {
         snake.move()
-        if snake.isSnakeAteMeal(<#T##meal: CGRect##CGRect#>) {
+        if snake.isSnakeAteMeal(meal.frame) {
             snake.addPart()
-
+            score += 1
+            meal.removeFromSuperview()
+            meal.setupFrame(superView: gameAreaView)
+            gameAreaView.addSubview(meal)
         }
         if !isGameOver {
             delayWithSeconds(0.5) {
@@ -68,15 +77,6 @@ class GameVC: UIViewController {
     @IBAction func turnRight(_ sender: UIButton) {
         snake.turnRight()
     }
-
-    @IBAction func addPart(_ sender: UIButton) {
-        snake.addPart()
-    }
-
-    @IBAction func move(_ sender: UIButton) {
-        snake.move()
-    }
-
 
 }
 
