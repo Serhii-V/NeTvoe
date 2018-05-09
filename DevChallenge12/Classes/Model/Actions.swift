@@ -30,6 +30,7 @@ extension SnakeBody {
     }
 
     func turnRight() {
+        guard headPositionAfterLastRotate != bodyArray[0].frame.origin else {return}
         switch bodyDirection {
         case .up:
             bodyDirection = .right
@@ -40,9 +41,11 @@ extension SnakeBody {
         case .right:
             bodyDirection = .down
         }
+        headPositionAfterLastRotate = bodyArray[0].frame.origin
     }
 
     func turnLeft() {
+        guard headPositionAfterLastRotate != bodyArray[0].frame.origin else {return}
         switch bodyDirection {
         case .up:
             bodyDirection = .left
@@ -53,6 +56,7 @@ extension SnakeBody {
         case .right:
             bodyDirection = .up
         }
+        headPositionAfterLastRotate = bodyArray[0].frame.origin
     }
 
     func increaseBody() {

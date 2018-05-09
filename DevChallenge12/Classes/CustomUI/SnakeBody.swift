@@ -15,6 +15,7 @@ class SnakeBody: UIView {
     let heightOfSnake: CGFloat = 10.0
     var bodyDirection: Direction = .right
     var withBorder: Bool = false
+    var headPositionAfterLastRotate: CGPoint = CGPoint(x: 15, y: 5)
     var bodyArray: [PartOfSnakeView] = [
                                         PartOfSnakeView(frame: CGRect(x: 15, y: 5, width: 10, height: 10), partColor: UIColor.red),
                                         PartOfSnakeView(frame: CGRect(x: 5, y: 5, width: 10, height: 10), partColor: UIColor.blue)
