@@ -71,7 +71,7 @@ class GameVC: UIViewController {
     }
 
     func setupGameArea() {
-        meal.setupFrame(superView: gameAreaView)
+        meal.setupFrame(superviewSize: gameAreaView.bounds.size)
         gameAreaView.addSubview(meal)
         if withBorder {
             gameAreaView.layer.borderWidth = 5.0
@@ -88,7 +88,7 @@ class GameVC: UIViewController {
             snake.addPart()
             score += 1
             meal.removeFromSuperview()
-            meal.setupFrame(superView: gameAreaView)
+            meal.setupFrame(superviewSize: gameAreaView.bounds.size)
             gameAreaView.addSubview(meal)
         }
         if !isGameOver {

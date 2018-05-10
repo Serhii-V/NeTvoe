@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		C5030C1420A24AEA009BDDB2 /* MealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C1320A24AEA009BDDB2 /* MealView.swift */; };
 		C5030C1720A2E014009BDDB2 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C1620A2E014009BDDB2 /* UIViewController + Extension.swift */; };
+		C5030C1D20A3B634009BDDB2 /* UIAlertController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C1C20A3B634009BDDB2 /* UIAlertController+Image.swift */; };
+		C5030C1F20A3BC87009BDDB2 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C1E20A3BC87009BDDB2 /* UIImage+Resize.swift */; };
+		C5030C2120A44E4E009BDDB2 /* BarrierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C2020A44E4E009BDDB2 /* BarrierView.swift */; };
 		C5DD206620A0A1C4007C8EAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DD206520A0A1C4007C8EAC /* AppDelegate.swift */; };
 		C5DD206B20A0A1C4007C8EAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5DD206920A0A1C4007C8EAC /* Main.storyboard */; };
 		C5DD206D20A0A1C5007C8EAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5DD206C20A0A1C5007C8EAC /* Assets.xcassets */; };
@@ -24,6 +27,9 @@
 /* Begin PBXFileReference section */
 		C5030C1320A24AEA009BDDB2 /* MealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealView.swift; sourceTree = "<group>"; };
 		C5030C1620A2E014009BDDB2 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
+		C5030C1C20A3B634009BDDB2 /* UIAlertController+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Image.swift"; sourceTree = "<group>"; };
+		C5030C1E20A3BC87009BDDB2 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
+		C5030C2020A44E4E009BDDB2 /* BarrierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarrierView.swift; sourceTree = "<group>"; };
 		C5DD206220A0A1C4007C8EAC /* DevChallenge12.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevChallenge12.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5DD206520A0A1C4007C8EAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5DD206A20A0A1C4007C8EAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -53,6 +59,8 @@
 			isa = PBXGroup;
 			children = (
 				C5030C1620A2E014009BDDB2 /* UIViewController + Extension.swift */,
+				C5030C1C20A3B634009BDDB2 /* UIAlertController+Image.swift */,
+				C5030C1E20A3BC87009BDDB2 /* UIImage+Resize.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -136,6 +144,7 @@
 				C5DD208420A0A832007C8EAC /* SnakeBody.swift */,
 				C5DD208F20A0D6B5007C8EAC /* PartOfSnakeView.swift */,
 				C5030C1320A24AEA009BDDB2 /* MealView.swift */,
+				C5030C2020A44E4E009BDDB2 /* BarrierView.swift */,
 			);
 			path = CustomUI;
 			sourceTree = "<group>";
@@ -224,10 +233,13 @@
 				C5030C1720A2E014009BDDB2 /* UIViewController + Extension.swift in Sources */,
 				C5DD207F20A0A401007C8EAC /* GameVC.swift in Sources */,
 				C5DD208220A0A417007C8EAC /* MainVC.swift in Sources */,
+				C5030C1F20A3BC87009BDDB2 /* UIImage+Resize.swift in Sources */,
 				C5030C1420A24AEA009BDDB2 /* MealView.swift in Sources */,
 				C5DD208520A0A832007C8EAC /* SnakeBody.swift in Sources */,
 				C5DD206620A0A1C4007C8EAC /* AppDelegate.swift in Sources */,
+				C5030C1D20A3B634009BDDB2 /* UIAlertController+Image.swift in Sources */,
 				C5DD209020A0D6B5007C8EAC /* PartOfSnakeView.swift in Sources */,
+				C5030C2120A44E4E009BDDB2 /* BarrierView.swift in Sources */,
 				C5DD209420A0FD22007C8EAC /* Actions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

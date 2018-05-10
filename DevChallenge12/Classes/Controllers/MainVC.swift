@@ -57,12 +57,20 @@ class MainVC: UIViewController {
         speedLabel.text = "Snake speed: " + String(Int(defaults.double(forKey: "speed") * 10))
     }
 
+    func showGameInfo() {
+        let alertController = UIAlertController(title: "Game Info", message: "", preferredStyle: .alert)
+        let image = #imageLiteral(resourceName: "InfoShake")
+        alertController.addImage(image)
+        alertController.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     @IBAction func changeBorder(_ sender: UIButton) {
-        if sender.currentImage == #imageLiteral(resourceName: "checkbox") {
-            sender.setImage(#imageLiteral(resourceName: "checkmark"), for: .normal)
+        if sender.currentImage == UIImage(named: "checkbox") {
+            sender.setImage(UIImage(named: "checkmark"), for: .normal)
             defaults.set(true, forKey: "isWithBorder")
         } else {
-            sender.setImage(#imageLiteral(resourceName: "checkbox"), for: .normal)
+            sender.setImage(UIImage(named: "checkbox"), for: .normal)
             defaults.set(false, forKey: "isWithBorder")
         }
     }
@@ -76,4 +84,9 @@ class MainVC: UIViewController {
         defaults.set(sender.value, forKey: "speed")
         updateSpeedLabel()
     }
+
+    @IBAction func showInfoPressed(_ sender: UIButton) {
+        showGameInfo()
+    }
+
 }
