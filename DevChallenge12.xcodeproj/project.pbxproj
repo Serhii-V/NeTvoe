@@ -12,6 +12,7 @@
 		C5030C1D20A3B634009BDDB2 /* UIAlertController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C1C20A3B634009BDDB2 /* UIAlertController+Image.swift */; };
 		C5030C1F20A3BC87009BDDB2 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C1E20A3BC87009BDDB2 /* UIImage+Resize.swift */; };
 		C5030C2120A44E4E009BDDB2 /* BarrierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C2020A44E4E009BDDB2 /* BarrierView.swift */; };
+		C5030C4120A49B07009BDDB2 /* SnakeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C4020A49B07009BDDB2 /* SnakeActions.swift */; };
 		C5DD206620A0A1C4007C8EAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DD206520A0A1C4007C8EAC /* AppDelegate.swift */; };
 		C5DD206B20A0A1C4007C8EAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5DD206920A0A1C4007C8EAC /* Main.storyboard */; };
 		C5DD206D20A0A1C5007C8EAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5DD206C20A0A1C5007C8EAC /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		C5030C1C20A3B634009BDDB2 /* UIAlertController+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Image.swift"; sourceTree = "<group>"; };
 		C5030C1E20A3BC87009BDDB2 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		C5030C2020A44E4E009BDDB2 /* BarrierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarrierView.swift; sourceTree = "<group>"; };
+		C5030C4020A49B07009BDDB2 /* SnakeActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeActions.swift; sourceTree = "<group>"; };
 		C5DD206220A0A1C4007C8EAC /* DevChallenge12.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevChallenge12.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5DD206520A0A1C4007C8EAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5DD206A20A0A1C4007C8EAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				C5DD209320A0FD22007C8EAC /* Actions.swift */,
+				C5030C4020A49B07009BDDB2 /* SnakeActions.swift */,
 				C5DD209520A1CB41007C8EAC /* SnakeDelegate.swift */,
 			);
 			path = Model;
@@ -237,6 +240,7 @@
 				C5030C1420A24AEA009BDDB2 /* MealView.swift in Sources */,
 				C5DD208520A0A832007C8EAC /* SnakeBody.swift in Sources */,
 				C5DD206620A0A1C4007C8EAC /* AppDelegate.swift in Sources */,
+				C5030C4120A49B07009BDDB2 /* SnakeActions.swift in Sources */,
 				C5030C1D20A3B634009BDDB2 /* UIAlertController+Image.swift in Sources */,
 				C5DD209020A0D6B5007C8EAC /* PartOfSnakeView.swift in Sources */,
 				C5030C2120A44E4E009BDDB2 /* BarrierView.swift in Sources */,

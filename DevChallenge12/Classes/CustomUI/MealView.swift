@@ -13,16 +13,12 @@ class MealView: UIView {
         super.init(frame: frame)
     }
 
-    convenience init(frame: CGRect, superviewSize: CGSize) {
-        self.init(frame: frame)
-        setupFrame(superviewSize: superviewSize)
-    }
-
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setupFrame(superviewSize: CGSize) {
+    func changeMeelPosition() {
+        guard let superviewSize = superview?.bounds.size else { return }
         let borderWidth: Int = 5
         let bothBorderWidth: Int = borderWidth * 2
         let mealSize: Int = 10

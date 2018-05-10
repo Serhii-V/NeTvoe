@@ -36,7 +36,7 @@ class SnakeBody: UIView {
         let part = PartOfSnakeView(frame: CGRect(x: returnPositionX(), y: returnPositionY(), width: heightOfSnake, height: heightOfSnake), partColor: UIColor.red)
         bodyArray.insert(part, at: 0)
         if withBorder {
-            guard !isBitBorder(part) else {delegate?.gameOver(); return}
+            guard !isBitBorder(part) else { delegate?.gameOver(); return }
         }
         drawSnake()
         self.setNeedsDisplay()
@@ -44,7 +44,7 @@ class SnakeBody: UIView {
 
     func returnPositionX() -> CGFloat {
         let x = bodyArray[0].frame.origin.x + deltaPositionX()
-        guard let sWidth = superview?.bounds.size.width else {return x}
+        guard let sWidth = superview?.bounds.size.width else { return x }
         if withBorder {
             return x
         }
@@ -58,7 +58,7 @@ class SnakeBody: UIView {
 
     func returnPositionY() -> CGFloat {
         let y = bodyArray[0].frame.origin.y + deltaPositionY()
-        guard let sHeight = superview?.bounds.size.height else {return y}
+        guard let sHeight = superview?.bounds.size.height else { return y }
         if withBorder {
             return y
         }
@@ -101,9 +101,9 @@ class SnakeBody: UIView {
     func isBitBorder(_ head: PartOfSnakeView) -> Bool {
         let x = head.frame.origin.x
         let y = head.frame.origin.y
-        guard let xMarge = superview?.bounds.size.width else {return false}
-        guard let yMarge = superview?.bounds.size.width else {return false}
-        guard x > 4.0, y > 4.0, x < xMarge - 15, y < yMarge - 15  else {return true}
+        guard let xMarge = superview?.bounds.size.width else { return false }
+        guard let yMarge = superview?.bounds.size.width else { return false }
+        guard x > 4.0, y > 4.0, x < xMarge - 15, y < yMarge - 15  else { return true }
         return false
     }
 

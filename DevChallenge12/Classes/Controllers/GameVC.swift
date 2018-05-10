@@ -16,18 +16,21 @@ class GameVC: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
 
     var snake: SnakeBody = SnakeBody()
-    let defaults = UserDefaults.standard
-    var withBorder: Bool = UserDefaults.standard.bool(forKey: "isWithBorder")
-    var motionManager = CMMotionManager()
+    let defaults = UserDefaults.standard /// DATA MODEL
+    var withBorder: Bool = UserDefaults.standard.bool(forKey: "isWithBorder") /// DATA MODEL
+    var motionManager = CMMotionManager() /// GYRO MODEL
     var lastRotation: Double = 0.0
     var deltaRotation: Double = 0.0
-    let sensitivity: Double = UserDefaults.standard.double(forKey: "sensitivity")
+    let sensitivity: Double = UserDefaults.standard.double(forKey: "sensitivity") /// DATA MODEL
+
     var isGameOver: Bool = false {
         didSet {
             self.view.layer.backgroundColor = UIColor.red.cgColor
         }
     }
+
     var meal: MealView = MealView()
+
     var score: Int = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
@@ -48,13 +51,14 @@ class GameVC: UIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        UIApplication.shared.isIdleTimerDisabled = true
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        /// MODEL
         motionManager.accelerometerUpdateInterval = 0.2
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, error) in
-            guard let xRotation = data?.acceleration.x else {return}
+            guard let xRotation = data?.acceleration.x else { return }
             self.deltaRotation = xRotation - self.lastRotation
             print(self.deltaRotation)
             if self.deltaRotation > self.sensitivity, xRotation > 0 {
@@ -66,12 +70,13 @@ class GameVC: UIViewController {
         }
     }
 
+    /// MOVE TO SETUP
     func startGame() {
         gameAreaView.addSubview(snake)
     }
 
     func setupGameArea() {
-        meal.setupFrame(superviewSize: gameAreaView.bounds.size)
+        meal.changeMeelPosition()
         gameAreaView.addSubview(meal)
         if withBorder {
             gameAreaView.layer.borderWidth = 5.0
@@ -84,30 +89,28 @@ class GameVC: UIViewController {
 
     func moveSnake() {
         snake.move()
+        guard !isGameOver else { return }
         if snake.isSnakeAteMeal(meal.frame) {
             snake.addPart()
             score += 1
             meal.removeFromSuperview()
-            meal.setupFrame(superviewSize: gameAreaView.bounds.size)
+            meal.changeMeelPosition()
             gameAreaView.addSubview(meal)
         }
-        if !isGameOver {
-            delayWithSeconds(1.03 - defaults.double(forKey: "speed")) {
-                self.moveSnake()
-            }
+
+        delayWithSeconds(1.03 - defaults.double(forKey: "speed")) {
+            self.moveSnake()
         }
     }
 
     func startNewGame() {
-        self.snake.removeSnakeFromSuperView()
+        self.snake.removeSnakeFromSuperView() /// УБРАТЬ ЛИШНЮЮ ЗМЕЮ
         self.snake = SnakeBody()
-        self.meal.removeFromSuperview()
+        self.meal.removeFromSuperview() /// ГЕНЕРИТЬ РАНДОМНУЮ ЛОКАЦИЮ
         self.view.layer.backgroundColor = UIColor.blue.cgColor
         scoreLabel.text = "Score: 0"
         setupGameArea()
         startGame()
-
-
     }
 
     @IBAction func restart(_ sender: UIButton) {
