@@ -2,8 +2,8 @@
 //  MainVC.swift
 //  DevChallenge12
 //
-//  Created by Serhii on 5/7/18.
-//  Copyright © 2018 Serhii. All rights reserved.
+//  Created by " " on 5/7/18.
+//  Copyright © 2018 " ". All rights reserved.
 //
 
 import UIKit
@@ -46,7 +46,7 @@ class MainVC: UIViewController {
     }
 
     func updateScoreLabel() {
-        bestScoreLabel.text = "Score: " + String(defaults.integer(forKey: "score"))
+        bestScoreLabel.text = "Best score: " + String(defaults.integer(forKey: "score"))
     }
 
     func updateSensitivityLabel() {
@@ -67,7 +67,7 @@ class MainVC: UIViewController {
 
     @IBAction func changeBorder(_ sender: UIButton) {
         if sender.currentImage == UIImage(named: "checkbox") {
-            sender.setImage(UIImage(named: "checkmark"), for: .normal)
+            sender.setImage(UIImage(named: "checkmarkFilled"), for: .normal)
             defaults.set(true, forKey: "isWithBorder")
         } else {
             sender.setImage(UIImage(named: "checkbox"), for: .normal)

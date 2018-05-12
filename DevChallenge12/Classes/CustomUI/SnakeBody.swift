@@ -2,16 +2,21 @@
 //  SnakeBody.swift
 //  DevChallenge12
 //
-//  Created by Serhii on 5/7/18.
-//  Copyright © 2018 Serhii. All rights reserved.
+//  Created by " " on 5/7/18.
+//  Copyright © 2018 " ". All rights reserved.
 //
 
 import UIKit
+
+protocol SnakeDelegate: NSObjectProtocol {
+    func gameOver()
+}
 
 class SnakeBody: UIView {
     var delegate: SnakeDelegate?
 
     static let snake: UIView = UIView()
+    let actions: SnakeActions = SnakeActions()
     let heightOfSnake: CGFloat = 10.0
     var bodyDirection: Direction = .right
     var withBorder: Bool = false
@@ -32,14 +37,11 @@ class SnakeBody: UIView {
 
     func addPart() {
         guard bodyArray.count != 0 else { return }
-        bodyArray[0].changeColor(bodyColor: .black)
-        let part = PartOfSnakeView(frame: CGRect(x: returnPositionX(), y: returnPositionY(), width: heightOfSnake, height: heightOfSnake), partColor: UIColor.red)
-        bodyArray.insert(part, at: 0)
-        if withBorder {
-            guard !isBitBorder(part) else { delegate?.gameOver(); return }
-        }
-        drawSnake()
-        self.setNeedsDisplay()
+        let part = PartOfSnakeView(frame: CGRect(x: (bodyArray.last?.frame.origin.x)!, y: (bodyArray.last?.frame.origin.y)!, width: heightOfSnake, height: heightOfSnake), partColor: UIColor.blue)
+            bodyArray.last?.changeColor(bodyColor: .black)
+            bodyArray.append(part)
+            drawSnake()
+            self.setNeedsDisplay()
     }
 
     func returnPositionX() -> CGFloat {
@@ -98,11 +100,11 @@ class SnakeBody: UIView {
         }
     }
 
-    func isBitBorder(_ head: PartOfSnakeView) -> Bool {
-        let x = head.frame.origin.x
-        let y = head.frame.origin.y
+    func isBitBorder(_ head: CGRect) -> Bool {
+        let x = head.origin.x
+        let y = head.origin.y
         guard let xMarge = superview?.bounds.size.width else { return false }
-        guard let yMarge = superview?.bounds.size.width else { return false }
+        guard let yMarge = superview?.bounds.size.height else { return false }
         guard x > 4.0, y > 4.0, x < xMarge - 15, y < yMarge - 15  else { return true }
         return false
     }
@@ -111,6 +113,16 @@ class SnakeBody: UIView {
         for i in bodyArray {
             i.removeFromSuperview()
         }
+    }
+
+    func restartSnake() {
+        bodyArray.forEach { $0.removeFromSuperview() }
+        bodyArray = [
+                    PartOfSnakeView(frame: CGRect(x: 15, y: 5, width: 10, height: 10), partColor: UIColor.red),
+                    PartOfSnakeView(frame: CGRect(x: 5, y: 5, width: 10, height: 10), partColor: UIColor.blue)
+                    ]
+        bodyDirection = .right
+        drawSnake()
     }
 }
 

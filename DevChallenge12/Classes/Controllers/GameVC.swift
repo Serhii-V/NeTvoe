@@ -2,48 +2,49 @@
 //  GameVC.swift
 //  DevChallenge12
 //
-//  Created by Serhii on 5/7/18.
-//  Copyright © 2018 Serhii. All rights reserved.
+//  Created by " " on 5/7/18.
+//  Copyright © 2018 " ". All rights reserved.
 //
 
 import UIKit
-import CoreMotion
 
 class GameVC: UIViewController {
     @IBOutlet weak var gameAreaView: UIView!
-    @IBOutlet weak var leftButton: UIButton!
-    @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var scoreLabel: UILabel!
-
+    @IBOutlet weak var restartButton: UIButton!
+    
+    var gameHistoryLog: [GameHistory] = []
     var snake: SnakeBody = SnakeBody()
-    let defaults = UserDefaults.standard /// DATA MODEL
-    var withBorder: Bool = UserDefaults.standard.bool(forKey: "isWithBorder") /// DATA MODEL
-    var motionManager = CMMotionManager() /// GYRO MODEL
+    var meal: MealView = MealView()
     var lastRotation: Double = 0.0
     var deltaRotation: Double = 0.0
-    let sensitivity: Double = UserDefaults.standard.double(forKey: "sensitivity") /// DATA MODEL
+    let borderArray: [BarrierView] = [BarrierView(), BarrierView()]
 
     var isGameOver: Bool = false {
         didSet {
             self.view.layer.backgroundColor = UIColor.red.cgColor
+            if isGameOver {
+                showGameOverAlert()
+            }
         }
     }
-
-    var meal: MealView = MealView()
 
     var score: Int = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
-            if score > defaults.integer(forKey: "score") {
-                defaults.set(score, forKey: "score")
+            if score > Storage.default.score {
+                Storage.default.score = score
             }
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        restartButton.isEnabled = true
+        gameHistoryLog.removeAll()
         setupGameArea()
-        startGame()
+        gameAreaView.addSubview(snake)
+        snake.actions.delegate = self
         snake.delegate = self
         moveSnake()
         UIApplication.shared.isIdleTimerDisabled = true
@@ -55,30 +56,17 @@ class GameVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        /// MODEL
-        motionManager.accelerometerUpdateInterval = 0.2
-        motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, error) in
-            guard let xRotation = data?.acceleration.x else { return }
-            self.deltaRotation = xRotation - self.lastRotation
-            print(self.deltaRotation)
-            if self.deltaRotation > self.sensitivity, xRotation > 0 {
-                self.snake.turnRight()
-            } else if self.deltaRotation < -self.sensitivity, xRotation < 0 {
-                self.snake.turnLeft()
-            }
-            self.lastRotation = xRotation
-        }
-    }
-
-    /// MOVE TO SETUP
-    func startGame() {
-        gameAreaView.addSubview(snake)
+        AccelerometerHandler.accelerometrManager.runAccelerometer(snake)
     }
 
     func setupGameArea() {
-        meal.changeMeelPosition()
+        borderArray.forEach {self.gameAreaView.addSubview($0)
+            $0.borderPosition(sView: gameAreaView)
+        }
+        checkMealWithBoarder()
+
         gameAreaView.addSubview(meal)
-        if withBorder {
+        if Storage.default.isContainsBorders {
             gameAreaView.layer.borderWidth = 5.0
             gameAreaView.layer.borderColor = UIColor.black.cgColor
             snake.withBorder = true
@@ -87,39 +75,130 @@ class GameVC: UIViewController {
         }
     }
 
+    func checkMealWithBoarder() {
+        for i in borderArray {
+            if i.frame.intersects(self.meal.frame) {
+                meal.changeMeelPosition(sView: gameAreaView)
+                checkMealWithBoarder()
+            }
+        }
+    }
+
+
     func moveSnake() {
-        snake.move()
+        var addPart = false
+        snake.actions.move(snake: self.snake, array: borderArray)
         guard !isGameOver else { return }
-        if snake.isSnakeAteMeal(meal.frame) {
+        if snake.actions.isSnakeAteMeal(meal.frame, snake: self.snake) {
             snake.addPart()
             score += 1
-            meal.removeFromSuperview()
-            meal.changeMeelPosition()
-            gameAreaView.addSubview(meal)
-        }
-
-        delayWithSeconds(1.03 - defaults.double(forKey: "speed")) {
+            addPart = true
+            meal.changeMeelPosition(sView: gameAreaView)
+        } 
+        gameHistoryLog.append(GameHistory(addPart: addPart, headPosition: snake.bodyArray[0].frame.origin, meal: meal.frame.origin))
+        delayWithSeconds(1.03 - Storage.default.speed) {
             self.moveSnake()
         }
     }
 
     func startNewGame() {
-        self.snake.removeSnakeFromSuperView() /// УБРАТЬ ЛИШНЮЮ ЗМЕЮ
-        self.snake = SnakeBody()
-        self.meal.removeFromSuperview() /// ГЕНЕРИТЬ РАНДОМНУЮ ЛОКАЦИЮ
+        snake.restartSnake()
+        self.meal.changeMeelPosition(sView: gameAreaView)
         self.view.layer.backgroundColor = UIColor.blue.cgColor
         scoreLabel.text = "Score: 0"
         setupGameArea()
-        startGame()
+        gameAreaView.addSubview(snake)
+    }
+
+    func restartGame() {
+        gameHistoryLog.removeAll()
+        self.isGameOver = false
+        snake.restartSnake()
+        self.meal.changeMeelPosition(sView: gameAreaView)
+        self.view.layer.backgroundColor = UIColor.blue.cgColor
+        scoreLabel.text = "Score: 0"
+        if Storage.default.isContainsBorders {
+            gameAreaView.layer.borderWidth = 5.0
+            gameAreaView.layer.borderColor = UIColor.black.cgColor
+            snake.withBorder = true
+        } else {
+            snake.withBorder = false
+        }
+        self.moveSnake()
+    }
+
+    func showGameOverAlert() {
+        let alert = UIAlertController.init(title: "Game Over" , message: "Your score: \(score) \n Try more.", preferredStyle: .actionSheet)
+        alert.addImage(#imageLiteral(resourceName: "gameOver"))
+        let tryAction = UIAlertAction(title: "Try more", style: .default) { (alert) in
+            self.restartGame()
+            self.restartButton.isEnabled = true
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (alert) in
+            self.returnToMenu()
+        }
+        let showLastGameAction = UIAlertAction(title: "Watch game recording", style: .default) { alert in
+            self.showGameRecording()
+        }
+        alert.addAction(tryAction)
+        alert.addAction(cancelAction)
+        alert.addAction(showLastGameAction)
+        self.present(alert, animated: true, completion: nil)
+
+    }
+
+    func showGameRecording() {
+        restartButton.isEnabled = false
+        self.isGameOver = false
+        snake.restartSnake()
+        self.view.layer.backgroundColor = UIColor.blue.cgColor
+        if Storage.default.isContainsBorders {
+            gameAreaView.layer.borderWidth = 5.0
+            gameAreaView.layer.borderColor = UIColor.black.cgColor
+            snake.withBorder = true
+        } else {
+            snake.withBorder = false
+        }
+        moveToPosition()
+    }
+
+
+    func moveToPosition(_ index: Int = 0 ) {
+        let lastIndex: Int = gameHistoryLog.count - 1
+        let savedPosition = gameHistoryLog[index]
+        self.meal.frame.origin = savedPosition.meelFrame
+        delayWithSeconds(0.2) {
+            if savedPosition.addPart {
+                self.snake.addPart()
+                self.snake.actions.moveTo(snake: self.snake, newPosition: savedPosition.headPosition)
+            } else {
+                self.snake.actions.moveTo(snake: self.snake, newPosition: savedPosition.headPosition)
+
+            }
+            if index < lastIndex {
+                self.moveToPosition(index + 1)
+            } else {
+                self.isGameOver = true
+            }
+        }
+    }
+
+    func returnToMenu() {
+        performSegue(withIdentifier: "mainVC", sender: nil)
+        for i in gameHistoryLog {
+            print(i.addPart)
+            print(i.headPosition)
+            print(i.meelFrame)
+        }
     }
 
     @IBAction func restart(_ sender: UIButton) {
-       startNewGame()
+       restartGame()
     }
 
-    @IBAction func returnToMenu(_ sender: UIButton) {
+    @IBAction func returnToMenu(_ sender: Any) {
+        returnToMenu()
     }
-
 }
 
 extension GameVC {
