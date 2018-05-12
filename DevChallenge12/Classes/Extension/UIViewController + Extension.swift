@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 extension UIViewController {
+    // check user defaults data by key
     func isUserDefaultsAlreadyExist(_ key: String) -> Bool {
         let userDefaults : UserDefaults = UserDefaults.standard
 

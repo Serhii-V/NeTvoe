@@ -31,8 +31,5 @@ class BarrierView: UIView {
         self.layer.backgroundColor = UIColor.purple.cgColor
         self.frame = CGRect(x: xPosition, y: yPosition, width: mealWidth, height: mealHeight)
         self.setNeedsDisplay()
-
     }
-    
-
 }

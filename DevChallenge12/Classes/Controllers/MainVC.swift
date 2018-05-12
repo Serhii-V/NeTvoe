@@ -15,46 +15,64 @@ class MainVC: UIViewController {
     @IBOutlet weak var speedSlider: UISlider!
     @IBOutlet weak var sensativiyyLabel: UILabel!
     @IBOutlet weak var speedLabel: UILabel!
-
-    let defaults = UserDefaults.standard
+    @IBOutlet weak var amountOfBarrierLabel: UILabel!
+    @IBOutlet weak var amountOfBarrierSlider: UISlider!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScreen()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !Storage.default.isNewUserPresentInStorage() {
+            showGameInfo()
+            Storage.default.isNewUser = false
+        }
+        print(Storage.default.isNewUser)
+    }
+
     func setupScreen() {
-        defaults.set(false, forKey: "isWithBorder")
+        Storage.default.isContainsBorders = false
         setupLabel()
     }
 
     func setupLabel() {
-        if !isUserDefaultsAlreadyExist("sensitivity") {
-            defaults.set(0.3, forKey: "sensitivity")
+        if !Storage.default.isSensitivityInStorage() {
+            Storage.default.sensitivity = 0.3
+            sensitivitySlider.value = Float(Storage.default.sensitivity)
         }
-        if !isUserDefaultsAlreadyExist("speed") {
-            defaults.set(0.3, forKey: "speed")
+        if !Storage.default.isSpeedPresentInStorage() {
+            Storage.default.speed = 0.3
+            speedSlider.value = Float(Storage.default.speed)
         }
-        if !isUserDefaultsAlreadyExist("score") {
-            defaults.set(0, forKey: "score")
+        if !Storage.default.isScorePresentInStorage() {
+            Storage.default.score = 0
+        }
+        if !Storage.default.isAmountOfBarrierPresentInStorage() {
+            Storage.default.amountOfBarrier = 3
+            amountOfBarrierSlider.value = Float(Storage.default.amountOfBarrier) / 10
         }
         updateSpeedLabel()
         updateSensitivityLabel()
         updateScoreLabel()
-        sensitivitySlider.value = Float(defaults.double(forKey: "sensitivity"))
-        speedSlider.value = Float(defaults.double(forKey: "speed"))
+        updateAmountIfBarrierLabel()
     }
 
     func updateScoreLabel() {
-        bestScoreLabel.text = "Best score: " + String(defaults.integer(forKey: "score"))
+        bestScoreLabel.text = "Best score: " + String(Storage.default.score)
     }
 
     func updateSensitivityLabel() {
-        sensativiyyLabel.text = "Sensitivity: " + String(Int(defaults.double(forKey: "sensitivity") * 10))
+        sensativiyyLabel.text = "Sensitivity: " + String(Int(Storage.default.sensitivity * 10))
+    }
+
+    func updateAmountIfBarrierLabel() {
+        amountOfBarrierLabel.text = "Amount of barrier: " + String(Storage.default.amountOfBarrier)
     }
 
     func updateSpeedLabel() {
-        speedLabel.text = "Snake speed: " + String(Int(defaults.double(forKey: "speed") * 10))
+        speedLabel.text = "Snake speed: " + String(Int(Storage.default.speed * 10))
     }
 
     func showGameInfo() {
@@ -68,22 +86,28 @@ class MainVC: UIViewController {
     @IBAction func changeBorder(_ sender: UIButton) {
         if sender.currentImage == UIImage(named: "checkbox") {
             sender.setImage(UIImage(named: "checkmarkFilled"), for: .normal)
-            defaults.set(true, forKey: "isWithBorder")
+            Storage.default.isContainsBorders = true
         } else {
             sender.setImage(UIImage(named: "checkbox"), for: .normal)
-            defaults.set(false, forKey: "isWithBorder")
+            Storage.default.isContainsBorders = false
         }
     }
 
     @IBAction func sensitivityChange(_ sender: UISlider) {
-        defaults.set(sender.value, forKey: "sensitivity")
+       Storage.default.sensitivity = Double(sender.value)
         updateSensitivityLabel()
     }
 
     @IBAction func speedChange(_ sender: UISlider) {
-        defaults.set(sender.value, forKey: "speed")
+        Storage.default.speed = Double(sender.value)
         updateSpeedLabel()
     }
+
+    @IBAction func amountOfBarrier(_ sender: UISlider) {
+        Storage.default.amountOfBarrier = Int(sender.value * 10.0)
+        updateAmountIfBarrierLabel()
+    }
+
 
     @IBAction func showInfoPressed(_ sender: UIButton) {
         showGameInfo()

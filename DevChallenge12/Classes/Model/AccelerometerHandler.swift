@@ -17,7 +17,6 @@ class AccelerometerHandler {
     var deltaRotation: Double = 0.0
     let sensitivity: Double = UserDefaults.standard.double(forKey: "sensitivity")
 
-
     func runAccelerometer(_ snake: SnakeBody ) {
         motionManager.accelerometerUpdateInterval = 0.2
         motionManager.startAccelerometerUpdates(to: OperationQueue.current!) { (data, error) in

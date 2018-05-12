@@ -15,6 +15,8 @@ class Storage {
     private let sensitivityKey: String = "sensitivity"
     private let scoreKey: String = "score"
     private let speedKey: String = "speed"
+    private let isNewUserKey: String = "isNewUser"
+    private let amountOfBarrierKey: String = "amountOfBarrier"
 
     var isContainsBorders: Bool {
         get {
@@ -56,8 +58,46 @@ class Storage {
         }
     }
 
+    var isNewUser: Bool {
+        get {
+            return userDefaults.bool(forKey: isNewUserKey)
+        }
+        set {
+            userDefaults.set(newValue, forKey: isNewUserKey)
+        }
+    }
+
+    var amountOfBarrier: Int {
+        get {
+            return userDefaults.integer(forKey: amountOfBarrierKey)
+        }
+        set {
+            userDefaults.set(newValue, forKey: amountOfBarrierKey)
+        }
+    }
+
     private init() {
 
+    }
+
+    func isNewUserPresentInStorage() -> Bool {
+        return userDefaults.object(forKey: isNewUserKey) != nil
+    }
+
+    func isSensitivityInStorage() -> Bool {
+        return userDefaults.object(forKey: sensitivityKey) != nil
+    }
+
+    func isSpeedPresentInStorage() -> Bool {
+        return userDefaults.object(forKey: speedKey) != nil
+    }
+
+    func isScorePresentInStorage() -> Bool {
+        return userDefaults.object(forKey: scoreKey) != nil
+    }
+
+    func isAmountOfBarrierPresentInStorage() -> Bool {
+        return userDefaults.object(forKey: amountOfBarrierKey) != nil
     }
 
 

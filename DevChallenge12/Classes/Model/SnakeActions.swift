@@ -27,7 +27,6 @@ class SnakeActions {
             guard !snake.isBitBorder(newFrame) else {
                 delegate?.gameOver()
                 return
-                
             }
         }
         for index in stride(from: snake.bodyArray.count - 1, to: 0, by: -1 ) {

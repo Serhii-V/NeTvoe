@@ -9,12 +9,12 @@
 import UIKit
 
 extension UIImage {
+    //image size to custom size
     func imageResize (sizeChange:CGSize)-> UIImage{
-        let hasAlpha = true
-        let scale: CGFloat = 0.0 // Use scale factor of main screen
-        UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale)
+        let isAlpha = true
+        let scale: CGFloat = 0.0
+        UIGraphicsBeginImageContextWithOptions(sizeChange, !isAlpha, scale)
         self.draw(in: CGRect(origin: CGPoint.zero, size: sizeChange))
-
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         return scaledImage!
     }

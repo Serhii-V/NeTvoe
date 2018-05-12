@@ -18,8 +18,7 @@ class GameVC: UIViewController {
     var meal: MealView = MealView()
     var lastRotation: Double = 0.0
     var deltaRotation: Double = 0.0
-    let borderArray: [BarrierView] = [BarrierView(), BarrierView()]
-
+    var barrierArray: [BarrierView] = []
     var isGameOver: Bool = false {
         didSet {
             self.view.layer.backgroundColor = UIColor.red.cgColor
@@ -28,7 +27,6 @@ class GameVC: UIViewController {
             }
         }
     }
-
     var score: Int = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
@@ -59,13 +57,12 @@ class GameVC: UIViewController {
         AccelerometerHandler.accelerometrManager.runAccelerometer(snake)
     }
 
+    //
     func setupGameArea() {
-        borderArray.forEach {self.gameAreaView.addSubview($0)
-            $0.borderPosition(sView: gameAreaView)
-        }
-        checkMealWithBoarder()
-
+        createBarriers()
         gameAreaView.addSubview(meal)
+        meal.changeMeelPosition(sView: gameAreaView)
+        checkMealWithBoarder()
         if Storage.default.isContainsBorders {
             gameAreaView.layer.borderWidth = 5.0
             gameAreaView.layer.borderColor = UIColor.black.cgColor
@@ -75,8 +72,39 @@ class GameVC: UIViewController {
         }
     }
 
+    func createBarriers() {
+        let amount = Storage.default.amountOfBarrier
+        if amount != 0 {
+            for _ in 0..<amount {
+                barrierArray.append(unicBarrier())
+            }
+            barrierArray.forEach {self.gameAreaView.addSubview($0)
+                $0.borderPosition(sView: gameAreaView)
+            }
+        }
+    }
+
+    func unicBarrier() -> BarrierView {
+        let new = BarrierView()
+        new.borderPosition(sView: gameAreaView)
+        for i in barrierArray {
+            if i.frame.intersects(new.frame) {
+                return unicBarrier()
+            }
+        }
+        return new
+    }
+//        if
+//        for i in borderArray {
+//            if i.frame.intersects(self.meal.frame) {
+//                meal.changeMeelPosition(sView: gameAreaView)
+//                checkMealWithBoarder()
+//            }
+//        }
+//    }
+
     func checkMealWithBoarder() {
-        for i in borderArray {
+        for i in barrierArray {
             if i.frame.intersects(self.meal.frame) {
                 meal.changeMeelPosition(sView: gameAreaView)
                 checkMealWithBoarder()
@@ -84,10 +112,9 @@ class GameVC: UIViewController {
         }
     }
 
-
     func moveSnake() {
         var addPart = false
-        snake.actions.move(snake: self.snake, array: borderArray)
+        snake.actions.move(snake: self.snake, array: barrierArray)
         guard !isGameOver else { return }
         if snake.actions.isSnakeAteMeal(meal.frame, snake: self.snake) {
             snake.addPart()
@@ -162,7 +189,6 @@ class GameVC: UIViewController {
         moveToPosition()
     }
 
-
     func moveToPosition(_ index: Int = 0 ) {
         let lastIndex: Int = gameHistoryLog.count - 1
         let savedPosition = gameHistoryLog[index]
@@ -173,7 +199,6 @@ class GameVC: UIViewController {
                 self.snake.actions.moveTo(snake: self.snake, newPosition: savedPosition.headPosition)
             } else {
                 self.snake.actions.moveTo(snake: self.snake, newPosition: savedPosition.headPosition)
-
             }
             if index < lastIndex {
                 self.moveToPosition(index + 1)
