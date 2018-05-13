@@ -17,6 +17,7 @@ class Storage {
     private let speedKey: String = "speed"
     private let isNewUserKey: String = "isNewUser"
     private let amountOfBarrierKey: String = "amountOfBarrier"
+    private let isDemoVersionKey: String = "isDemoVersionKey"
 
     var isContainsBorders: Bool {
         get {
@@ -76,6 +77,16 @@ class Storage {
         }
     }
 
+    var isDemoVersion: Bool {
+        get {
+            return userDefaults.bool(forKey: isDemoVersionKey)
+        }
+
+        set {
+            userDefaults.set(newValue, forKey: isDemoVersionKey)
+        }
+    }
+
     private init() {
 
     }
@@ -100,6 +111,8 @@ class Storage {
         return userDefaults.object(forKey: amountOfBarrierKey) != nil
     }
 
-
+    func isDemoVersionPresentInStorage() -> Bool {
+        return userDefaults.object(forKey: isDemoVersionKey) != nil
+    }
 
 }

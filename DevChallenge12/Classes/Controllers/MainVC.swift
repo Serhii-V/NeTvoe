@@ -65,14 +65,18 @@ class MainVC: UIViewController {
 
     func updateSensitivityLabel() {
         sensativiyyLabel.text = "Sensitivity: " + String(Int(Storage.default.sensitivity * 10))
+        sensitivitySlider.value = Float(Storage.default.sensitivity)
+
     }
 
     func updateAmountIfBarrierLabel() {
         amountOfBarrierLabel.text = "Amount of barrier: " + String(Storage.default.amountOfBarrier)
+        amountOfBarrierSlider.value = Float(Storage.default.amountOfBarrier) / 10
     }
 
     func updateSpeedLabel() {
         speedLabel.text = "Snake speed: " + String(Int(Storage.default.speed * 10))
+        speedSlider.value = Float(Storage.default.speed)
     }
 
     func showGameInfo() {
@@ -82,6 +86,25 @@ class MainVC: UIViewController {
         alertController.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
+
+    func showDemoInfo() {
+        let message = "You can control your snake with voice. Say `Left` for turn left or `Right` for turn right. This demo version has a lot of bugs! But still funy :))"
+        let alertController = UIAlertController(title: "Game Info", message: message, preferredStyle: .alert)
+        let image = #imageLiteral(resourceName: "infoDemo")
+        alertController.addImage(image)
+        alertController.addAction(UIAlertAction(title: "Close", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    func startDemoVersion() {
+        if !Storage.default.isDemoVersionPresentInStorage() {
+            showDemoInfo()
+        }
+        Storage.default.isDemoVersion = true
+        performSegue(withIdentifier: "CameVC", sender: nil)
+    }
+
+
 
     @IBAction func changeBorder(_ sender: UIButton) {
         if sender.currentImage == UIImage(named: "checkbox") {
@@ -108,6 +131,14 @@ class MainVC: UIViewController {
         updateAmountIfBarrierLabel()
     }
 
+    @IBAction func startDemoVersion(_ sender: UIButton) {
+        startDemoVersion()
+    }
+
+
+    @IBAction func showInfoOfDemoVersion(_ sender: UIButton) {
+        showDemoInfo()
+    }
 
     @IBAction func showInfoPressed(_ sender: UIButton) {
         showGameInfo()

@@ -51,10 +51,21 @@ class GameVC: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         UIApplication.shared.isIdleTimerDisabled = false
+        Storage.default.isDemoVersion = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        AccelerometerHandler.accelerometrManager.runAccelerometer(snake)
+        if Storage.default.isDemoVersion {
+            startRec()
+        } else {
+            AccelerometerHandler.accelerometrManager.runAccelerometer(snake)
+        }
+    }
+
+    func startRec() {
+        SpeechHandler.speechManager.registerSpeechRecognizer() 
+       try! SpeechHandler.speechManager.startRecording(self.snake)
+
     }
 
     //
@@ -94,14 +105,6 @@ class GameVC: UIViewController {
         }
         return new
     }
-//        if
-//        for i in borderArray {
-//            if i.frame.intersects(self.meal.frame) {
-//                meal.changeMeelPosition(sView: gameAreaView)
-//                checkMealWithBoarder()
-//            }
-//        }
-//    }
 
     func checkMealWithBoarder() {
         for i in barrierArray {
