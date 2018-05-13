@@ -17,9 +17,9 @@
 		C5030C4520A57287009BDDB2 /* AccelerometerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C4420A57287009BDDB2 /* AccelerometerHandler.swift */; };
 		C5030C4720A5BF3F009BDDB2 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C4620A5BF3F009BDDB2 /* Storage.swift */; };
 		C5030C4B20A74B40009BDDB2 /* SpeechHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5030C4A20A74B40009BDDB2 /* SpeechHandler.swift */; };
+		C5CDA81820A8426800FF471C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5CDA81720A8426700FF471C /* Assets.xcassets */; };
 		C5DD206620A0A1C4007C8EAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DD206520A0A1C4007C8EAC /* AppDelegate.swift */; };
 		C5DD206B20A0A1C4007C8EAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5DD206920A0A1C4007C8EAC /* Main.storyboard */; };
-		C5DD206D20A0A1C5007C8EAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5DD206C20A0A1C5007C8EAC /* Assets.xcassets */; };
 		C5DD207020A0A1C5007C8EAC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5DD206E20A0A1C5007C8EAC /* LaunchScreen.storyboard */; };
 		C5DD207F20A0A401007C8EAC /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DD207E20A0A401007C8EAC /* GameVC.swift */; };
 		C5DD208220A0A417007C8EAC /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DD208120A0A417007C8EAC /* MainVC.swift */; };
@@ -38,10 +38,10 @@
 		C5030C4420A57287009BDDB2 /* AccelerometerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerometerHandler.swift; sourceTree = "<group>"; };
 		C5030C4620A5BF3F009BDDB2 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		C5030C4A20A74B40009BDDB2 /* SpeechHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechHandler.swift; sourceTree = "<group>"; };
+		C5CDA81720A8426700FF471C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C5DD206220A0A1C4007C8EAC /* DevChallenge12.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevChallenge12.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5DD206520A0A1C4007C8EAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5DD206A20A0A1C4007C8EAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C5DD206C20A0A1C5007C8EAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C5DD206F20A0A1C5007C8EAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C5DD207120A0A1C5007C8EAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5DD207E20A0A401007C8EAC /* GameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 		C5DD207C20A0A38B007C8EAC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C5DD206C20A0A1C5007C8EAC /* Assets.xcassets */,
+				C5CDA81720A8426700FF471C /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -226,7 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5DD207020A0A1C5007C8EAC /* LaunchScreen.storyboard in Resources */,
-				C5DD206D20A0A1C5007C8EAC /* Assets.xcassets in Resources */,
+				C5CDA81820A8426800FF471C /* Assets.xcassets in Resources */,
 				C5DD206B20A0A1C4007C8EAC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,7 +398,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9VM57AG273;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/DevChallenge12/Configs/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -418,7 +418,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9VM57AG273;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/DevChallenge12/Configs/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
